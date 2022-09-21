@@ -7,8 +7,13 @@ namespace SistemaBanco
 {
     public class Gerenciador
     {
-        public static void Main (String [] args){
-            
+        public static void Main(String[] args)
+        {
+
+                Conta beatriz = new Conta(0555, 2900);
+                Conta marcio = new Conta(0755, 1200);
+
+                beatriz.transferirValor(500, marcio);
         }
     }
 }
