@@ -7,7 +7,7 @@ namespace SistemaBanco
 {
     public class Conta
     {
-        public static double TaxaOperacao { get; private set; } 
+        public static double TaxaOperacao { get; private set; }
         public static int TotalDeContasCriadas { get; private set; }
         public Usuario Usuario { get; set; }
         public int Agencia { get; }
@@ -19,9 +19,9 @@ namespace SistemaBanco
             Agencia = agencia;
             Numero = numero;
 
-            TaxaOperacao = 30 / TotalDeContasCriadas;
-
             TotalDeContasCriadas++;
+
+            TaxaOperacao = 30 / TotalDeContasCriadas;
         }
 
         public void consultarSaldo()
@@ -34,6 +34,7 @@ namespace SistemaBanco
             if (valor < 0)
             {
                 Console.WriteLine("Valor inválido para o saque.");
+                return false;
             }
 
             if (_saldo < valor)
@@ -44,7 +45,6 @@ namespace SistemaBanco
 
             Console.WriteLine("Valor sacado de: R$ " + valor);
             _saldo -= valor;
-
             return true;
         }
 
@@ -53,17 +53,17 @@ namespace SistemaBanco
             if (valor < 0)
             {
                 Console.WriteLine("Valor inválido para o deposito.");
-
             }
 
             if (_saldo < valor)
             {
-                Console.WriteLine("Saldo indiponivel para saque.");
+                Console.WriteLine("Saldo indiponivel para deposito.");
             }
-
-            Console.WriteLine("Valor depositado de R$ " + valor);
-            _saldo += valor;
-
+            else
+            {
+                Console.WriteLine("Valor depositado de R$ " + valor);
+                _saldo += valor;
+            }
         }
 
         public bool transferirValor(double valor, Conta contaDestino)
@@ -71,14 +71,12 @@ namespace SistemaBanco
             if (valor < 0)
             {
                 Console.WriteLine("Valor inválido para a transferência.");
-
                 return false;
             }
 
             sacarSaldo(valor);
 
             contaDestino.depositarValor(valor);
-
             return true;
         }
     }

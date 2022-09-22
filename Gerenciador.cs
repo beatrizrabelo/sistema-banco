@@ -13,7 +13,7 @@ namespace SistemaBanco
                 Conta beatriz = new Conta(0555, 2900);
                 Conta marcio = new Conta(0755, 1200);
 
-                beatriz.transferirValor(500, marcio);
+                beatriz.transferirValor(-100, marcio);
         }
     }
 }
