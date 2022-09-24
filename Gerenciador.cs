@@ -10,10 +10,29 @@ namespace SistemaBanco
         public static void Main(String[] args)
         {
 
-                Conta beatriz = new Conta(0555, 2900);
-                Conta marcio = new Conta(0755, 1200);
+            try
+            {
+                Conta salario = new Conta(1900, 0990);
+                Conta corrente = new Conta(1222, 02445);
+                salario.sacarSaldo(200);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (ValorInvalidoException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (SaldoInfuficienteException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-                beatriz.transferirValor(-100, marcio);
         }
     }
 }

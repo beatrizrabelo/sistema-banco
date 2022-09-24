@@ -16,6 +16,16 @@ namespace SistemaBanco
 
         public Conta(int agencia, int numero)
         {
+            if (agencia <= 0)
+            {
+                throw new ArgumentException("O argumento agencia deve ser maior que 0.", nameof(agencia));
+            }
+
+            if (numero <= 0)
+            {
+                throw new ArgumentException("O argumento numero deve ser maior que 0.", nameof(numero));
+            }
+
             Agencia = agencia;
             Numero = numero;
 
@@ -31,52 +41,42 @@ namespace SistemaBanco
 
         public bool sacarSaldo(double valor)
         {
-            if (valor < 0)
+            if (IsInvalid.isInvalid(valor))
             {
-                Console.WriteLine("Valor inválido para o saque.");
-                return false;
+                throw new ValorInvalidoException("Valor inválido.");
             }
 
-            if (_saldo < valor)
+            if (IsInsufficient.isInsufficient(_saldo, valor))
             {
-                Console.WriteLine("Saldo indiponivel para saque.");
-                return false;
+                throw new SaldoInfuficienteException("Saldo insuficiente.");
             }
 
-            Console.WriteLine("Valor sacado de: R$ " + valor);
+            Console.WriteLine("Valor sacado de R$ " + valor);
             _saldo -= valor;
             return true;
+
         }
 
-        public void depositarValor(double valor)
+        public bool depositarValor(double valor)
         {
-            if (valor < 0)
+            if (IsInvalid.isInvalid(valor))
             {
-                Console.WriteLine("Valor inválido para o deposito.");
-            }
-
-            if (_saldo < valor)
-            {
-                Console.WriteLine("Saldo indiponivel para deposito.");
+                throw new ValorInvalidoException("Valor inválido.");
             }
             else
             {
                 Console.WriteLine("Valor depositado de R$ " + valor);
                 _saldo += valor;
+                return true;
             }
         }
 
         public bool transferirValor(double valor, Conta contaDestino)
         {
-            if (valor < 0)
-            {
-                Console.WriteLine("Valor inválido para a transferência.");
-                return false;
-            }
-
             sacarSaldo(valor);
 
             contaDestino.depositarValor(valor);
+
             return true;
         }
     }
