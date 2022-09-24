@@ -12,15 +12,16 @@ namespace SistemaBanco
 
             try
             {
-                Conta salario = new Conta(1900, 0990);
+                Conta salario = new Conta(1212, 0222);
                 Conta corrente = new Conta(1222, 02445);
-                salario.sacarSaldo(200);
+                salario.depositarValor(2900);
+                salario.sacarSaldo(50);
             }
-            catch (ArgumentException ex)
+            catch (ValorInvalidoException ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            catch (ValorInvalidoException ex)
+            catch (ArgumentException ex)
             {
                 Console.WriteLine(ex.Message);
             }

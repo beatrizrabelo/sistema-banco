@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace SistemaBanco
 {
-    public class IsInvalid
+    public class Saldo
     {
-        public static bool isInvalid(double valor)
+        public static bool isInsufficient(double saldo, double valor)
         {
-
-            if (valor < 0)
+            if (saldo < valor)
             {
                 return true;
             }

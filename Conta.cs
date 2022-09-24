@@ -41,14 +41,14 @@ namespace SistemaBanco
 
         public bool sacarSaldo(double valor)
         {
-            if (IsInvalid.isInvalid(valor))
+            if (Valor.isInvalid(valor))
             {
-                throw new ValorInvalidoException("Valor inválido.");
+                throw new ValorInvalidoException(valor);
             }
 
-            if (IsInsufficient.isInsufficient(_saldo, valor))
+            if (Saldo.isInsufficient(_saldo, valor))
             {
-                throw new SaldoInfuficienteException("Saldo insuficiente.");
+                throw new SaldoInfuficienteException(valor, _saldo);
             }
 
             Console.WriteLine("Valor sacado de R$ " + valor);
@@ -59,9 +59,9 @@ namespace SistemaBanco
 
         public bool depositarValor(double valor)
         {
-            if (IsInvalid.isInvalid(valor))
+            if (Valor.isInvalid(valor))
             {
-                throw new ValorInvalidoException("Valor inválido.");
+                throw new ValorInvalidoException(valor);
             }
             else
             {
