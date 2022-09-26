@@ -73,10 +73,16 @@ namespace SistemaBanco
 
         public bool transferirValor(double valor, Conta contaDestino)
         {
-            sacarSaldo(valor);
+            try
+            {
+                sacarSaldo(valor);
+            }
+            catch (SaldoInfuficienteException ex)
+            {
+                throw new Exception("Operação não realizada.", ex);
+            }
 
             contaDestino.depositarValor(valor);
-
             return true;
         }
     }
