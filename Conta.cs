@@ -79,7 +79,7 @@ namespace SistemaBanco
             }
             catch (SaldoInfuficienteException ex)
             {
-                throw new Exception("Operação não realizada.", ex);
+                throw new OperacaoFinanceiraException("Operação não realizada.", ex);
             }
 
             contaDestino.depositarValor(valor);

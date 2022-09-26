@@ -13,9 +13,9 @@ namespace SistemaBanco
             {
                 Conta beatriz = new Conta(0222, 4555);
                 Conta mario = new Conta(2090, 0888);
-                beatriz.transferirValor(12000, mario);
+                beatriz.sacarSaldo(2000);
             }
-            catch (Exception ex)
+            catch (OperacaoFinanceiraException ex)
             {
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
