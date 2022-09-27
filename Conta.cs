@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace SistemaBanco
 {
+
+    /// <summary>
+    /// Define uma conta no Sistema Banco.
+    /// </summary>
     public class Conta
     {
         public static double TaxaOperacao { get; private set; }
@@ -14,6 +18,11 @@ namespace SistemaBanco
         public int Numero { get; }
         private double _saldo;
 
+        /// <summary>
+        /// Cria uma instância de Conta com os argumentos agencia e numero.
+        /// </summary>
+        /// <param name="agencia"> Representa o valor da propriedade <see cref="Agencia"/> e deve possuir um valor maior que 0. </param>
+        /// <param name="numero"> Representa o valor da propriedade <see cref="Numero"/> e deve possuir um valor maior que 0. </param>
         public Conta(int agencia, int numero)
         {
             if (agencia <= 0)
@@ -34,11 +43,18 @@ namespace SistemaBanco
             TaxaOperacao = 30 / TotalDeContasCriadas;
         }
 
+        /// <summary>
+        /// Exibe o saldo da conta.
+        /// </summary>
         public void consultarSaldo()
         {
             Console.WriteLine("Seu saldo é: R$ " + _saldo);
         }
 
+        /// <summary>
+        /// Executa o saque do saldo. 
+        /// </summary>
+        /// <param name="valor"> Representa o argumento de <see cref= "Valor"/> para ser sacado. Deve ser maior ou igual ao saldo disponivel na conta.</param>
         public bool sacarSaldo(double valor)
         {
             if (Valor.isInvalid(valor))
@@ -57,6 +73,10 @@ namespace SistemaBanco
 
         }
 
+        /// <summary>
+        /// Executa o deposito de um valor na conta.
+        /// </summary>
+        /// <param name="valor"> Representa o argumento <see cref= "Valor"/> para ser depositado. </param>
         public bool depositarValor(double valor)
         {
             if (Valor.isInvalid(valor))
@@ -71,6 +91,11 @@ namespace SistemaBanco
             }
         }
 
+        /// <summary>
+        /// Executa a transferencia para uma outra conta destino.
+        /// </summary>
+        /// <param name="valor"> Representa o argumento <see cref= "valor" /> e deve possuir um valor maior ou igual a 0. </param>
+        /// <param name="contaDestino"> Representa o argumento <see cref= "contaDestino" /> . </param>
         public bool transferirValor(double valor, Conta contaDestino)
         {
             try
