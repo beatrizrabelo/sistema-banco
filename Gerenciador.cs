@@ -13,7 +13,10 @@ namespace SistemaBanco
             {
                 Conta beatriz = new Conta(0222, 4555);
                 Conta mario = new Conta(2090, 0888);
-                beatriz.sacarSaldo(2000);
+                beatriz.depositarValor(2000);
+                beatriz.sacarSaldo(10);
+                beatriz.transferirValor(-200, mario);
+                beatriz.consultarSaldo();
             }
             catch (OperacaoFinanceiraException ex)
             {

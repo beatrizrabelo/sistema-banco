@@ -16,11 +16,12 @@ namespace SistemaBanco
         public Usuario Usuario { get; set; }
         public int Agencia { get; }
         public int Numero { get; }
-        private double _saldo;
+        private double Saldos { get; set; }
 
         /// <summary>
-        /// Cria uma instância de Conta com os argumentos agencia e numero.
+        /// Cria uma instância de Conta.
         /// </summary>
+        /// <exception cref="ArgumentException"> Exceção lançada quando os argumentos são menores que 0. </exception>
         /// <param name="agencia"> Representa o valor da propriedade <see cref="Agencia"/> e deve possuir um valor maior que 0. </param>
         /// <param name="numero"> Representa o valor da propriedade <see cref="Numero"/> e deve possuir um valor maior que 0. </param>
         public Conta(int agencia, int numero)
@@ -44,17 +45,19 @@ namespace SistemaBanco
         }
 
         /// <summary>
-        /// Exibe o saldo da conta.
+        /// Exibe a propriedade <see cref="Saldos"/> da classe <see cref="Conta"/>.
         /// </summary>
         public void consultarSaldo()
         {
-            Console.WriteLine("Seu saldo é: R$ " + _saldo);
+            Console.WriteLine("Seu saldo é: R$ " + Saldos);
         }
 
         /// <summary>
-        /// Executa o saque do saldo. 
+        /// Realiza o saque e atualiza o valor da propriedade <see cref="Saldos"/>.
         /// </summary>
-        /// <param name="valor"> Representa o argumento de <see cref= "Valor"/> para ser sacado. Deve ser maior ou igual ao saldo disponivel na conta.</param>
+        /// <exception cref="ValorInvalidoException">Exceção lançada quando o <paramref name= "valor"/> é inválido. </exception>
+        /// <exception cref="SaldoInfuficienteException">Exceção lançada quando o valor de <paramref name="valor"/> é maior que a propriedade <see cref="Saldo"/>.</exception>
+        /// <param name="valor"> Representa o argumento de <paramref name= "valor"/> para ser sacado. Deve ser maior ou igual ao saldo disponivel na conta.</param>
         public bool sacarSaldo(double valor)
         {
             if (Valor.isInvalid(valor))
@@ -62,21 +65,22 @@ namespace SistemaBanco
                 throw new ValorInvalidoException(valor);
             }
 
-            if (Saldo.isInsufficient(_saldo, valor))
+            if (Saldo.isInsufficient(Saldos, valor))
             {
-                throw new SaldoInfuficienteException(valor, _saldo);
+                throw new SaldoInfuficienteException(valor, Saldos);
             }
 
             Console.WriteLine("Valor sacado de R$ " + valor);
-            _saldo -= valor;
+            Saldos -= valor;
             return true;
 
         }
 
         /// <summary>
-        /// Executa o deposito de um valor na conta.
+        /// Realiza o deposito de um <paramref name="valor"/>.
         /// </summary>
-        /// <param name="valor"> Representa o argumento <see cref= "Valor"/> para ser depositado. </param>
+        /// <exception cref="ValorInvalidoException">Exceção lançada quando o <paramref name= "valor"/> é inválido. </exception>
+        /// <param name="valor"> Representa o argumento <paramref name="valor"/> para ser depositado. </param>
         public bool depositarValor(double valor)
         {
             if (Valor.isInvalid(valor))
@@ -86,15 +90,16 @@ namespace SistemaBanco
             else
             {
                 Console.WriteLine("Valor depositado de R$ " + valor);
-                _saldo += valor;
+                Saldos += valor;
                 return true;
             }
         }
 
         /// <summary>
-        /// Executa a transferencia para uma outra conta destino.
+        /// Realiza uma transferência de um <paramref name="valor"/> para uma <paramref name="contaDestino"/>.
         /// </summary>
-        /// <param name="valor"> Representa o argumento <see cref= "valor" /> e deve possuir um valor maior ou igual a 0. </param>
+        /// <exception cref="SaldoInfuficienteException">Exceção lançada quando o valor de <paramref name="valor"/> é maior que a propriedade <see cref="_saldo"/>.</exception>
+        /// <param name="valor"> Representa o argumento <paramref name= "valor" /> e deve possuir um valor maior ou igual a 0. </param>
         /// <param name="contaDestino"> Representa o argumento <see cref= "contaDestino" /> . </param>
         public bool transferirValor(double valor, Conta contaDestino)
         {
