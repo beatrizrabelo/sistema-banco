@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SistemaBanco
+namespace SistemaBanco.Models
 {
 
     /// <summary>
@@ -16,7 +11,7 @@ namespace SistemaBanco
         public Usuario Usuario { get; set; }
         public int Agencia { get; }
         public int Numero { get; }
-        private double Saldos { get; set; }
+        private decimal Saldos { get; set; }
 
         /// <summary>
         /// Cria uma instância de Conta.
@@ -47,9 +42,9 @@ namespace SistemaBanco
         /// <summary>
         /// Exibe a propriedade <see cref="Saldos"/> da classe <see cref="Conta"/>.
         /// </summary>
-        public void consultarSaldo()
+        public void Consultar()
         {
-            Console.WriteLine("Seu saldo é: R$ " + Saldos);
+            Console.WriteLine($"Seu saldo é: R$ {Saldos}");
         }
 
         /// <summary>
@@ -58,7 +53,7 @@ namespace SistemaBanco
         /// <exception cref="ValorInvalidoException">Exceção lançada quando o <paramref name= "valor"/> é inválido. </exception>
         /// <exception cref="SaldoInfuficienteException">Exceção lançada quando o valor de <paramref name="valor"/> é maior que a propriedade <see cref="Saldo"/>.</exception>
         /// <param name="valor"> Representa o argumento de <paramref name= "valor"/> para ser sacado. Deve ser maior ou igual ao saldo disponivel na conta.</param>
-        public bool sacarSaldo(double valor)
+        public bool Sacar(decimal valor)
         {
             if (Valor.isInvalid(valor))
             {
@@ -70,7 +65,7 @@ namespace SistemaBanco
                 throw new SaldoInfuficienteException(valor, Saldos);
             }
 
-            Console.WriteLine("Valor sacado de R$ " + valor);
+            Console.WriteLine($"Valor sacado de R$ {valor}");
             Saldos -= valor;
             return true;
 
@@ -81,7 +76,7 @@ namespace SistemaBanco
         /// </summary>
         /// <exception cref="ValorInvalidoException">Exceção lançada quando o <paramref name= "valor"/> é inválido. </exception>
         /// <param name="valor"> Representa o argumento <paramref name="valor"/> para ser depositado. </param>
-        public bool depositarValor(double valor)
+        public bool Depositar(decimal valor)
         {
             if (Valor.isInvalid(valor))
             {
@@ -89,7 +84,7 @@ namespace SistemaBanco
             }
             else
             {
-                Console.WriteLine("Valor depositado de R$ " + valor);
+                Console.WriteLine($"Valor depositado de R${valor}");
                 Saldos += valor;
                 return true;
             }
@@ -101,18 +96,18 @@ namespace SistemaBanco
         /// <exception cref="SaldoInfuficienteException">Exceção lançada quando o valor de <paramref name="valor"/> é maior que a propriedade <see cref="_saldo"/>.</exception>
         /// <param name="valor"> Representa o argumento <paramref name= "valor" /> e deve possuir um valor maior ou igual a 0. </param>
         /// <param name="contaDestino"> Representa o argumento <see cref= "contaDestino" /> . </param>
-        public bool transferirValor(double valor, Conta contaDestino)
+        public bool Transferir(decimal valor, Conta contaDestino)
         {
             try
             {
-                sacarSaldo(valor);
+                Sacar(valor);
             }
             catch (SaldoInfuficienteException ex)
             {
                 throw new OperacaoFinanceiraException("Operação não realizada.", ex);
             }
 
-            contaDestino.depositarValor(valor);
+            contaDestino.Depositar(valor);
             return true;
         }
     }

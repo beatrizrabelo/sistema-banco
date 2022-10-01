@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SistemaBanco
+namespace SistemaBanco.Models
 {
     public class Usuario
     {
@@ -13,6 +8,11 @@ namespace SistemaBanco
 
         public Usuario (string cpf, string rg)
         {
+            if (string.IsNullOrEmpty(Nome))
+            {
+                Console.WriteLine("Nome com campo nulo ou vázio.");
+            }
+
             Cpf = cpf;
             Rg = rg;
         }
